@@ -1,7 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
-import { useAccount } from 'wagmi'
 import { z } from 'zod'
 
 import { useCreateOrder } from '@/api/hooks'
@@ -10,6 +9,7 @@ import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { useAuthenticated } from '@/hooks/useAuthenticated'
 import { QUERY_KEYS } from '@/lib/constants'
 
 const schema = z.object({
@@ -20,13 +20,19 @@ const schema = z.object({
     const parsed = Number(val)
     return isNaN(parsed) || !val ? undefined : parsed
   }, z.number().positive().optional()),
-  expiresAt: z.string().optional(),
+  expiresAt: z.preprocess((val) => {
+    if (typeof val === 'string' && val !== '') {
+      const date = new Date(val)
+      return isNaN(date.getTime()) ? undefined : date.toISOString()
+    }
+    return undefined
+  }, z.string().optional()),
 })
 type FormValues = z.infer<typeof schema>
 
 export function CreateOrderSidebar() {
   const queryClient = useQueryClient()
-  const { isConnected } = useAccount()
+  const isAuthenticated = useAuthenticated()
   const { mutate: createOrder, isPending } = useCreateOrder()
 
   const {
@@ -42,24 +48,21 @@ export function CreateOrderSidebar() {
   })
 
   const onSubmit = async (data: FormValues) => {
-    createOrder(
-      { address: '0x-mock', ...data },
-      {
-        onSuccess: () => {
-          reset()
+    createOrder(data, {
+      onSuccess: () => {
+        reset()
 
-          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.orders })
-          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.positions })
-          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.balance })
-          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.trades })
-        },
+        queryClient.invalidateQueries({ queryKey: QUERY_KEYS.orders })
+        queryClient.invalidateQueries({ queryKey: QUERY_KEYS.positions })
+        queryClient.invalidateQueries({ queryKey: QUERY_KEYS.balance })
+        queryClient.invalidateQueries({ queryKey: QUERY_KEYS.trades })
       },
-    )
+    })
   }
 
   const type = watch('type')
 
-  const disabled = !isConnected || isPending
+  const disabled = !isAuthenticated || isPending
 
   return (
     <aside className='w-[300px] ml-4'>

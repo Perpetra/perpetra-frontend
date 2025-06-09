@@ -13,6 +13,7 @@ export const API_ROUTES = {
   positions: '/positions',
   positionsClose: '/positions/close',
   trades: '/trades',
+  darkPoolSummary: '/darkpool/summary',
 }
 
 export const QUERY_KEYS = {
@@ -20,10 +21,13 @@ export const QUERY_KEYS = {
   orders: ['orders'],
   positions: ['positions'],
   trades: ['trades'],
+  darkPoolSummary: ['darkPoolSummary'],
 }
 
 export const USDC_ADDRESS = '0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238'
+// https://sepolia.etherscan.io/address/0x1c7d4b196cb0c7b01d743fbc6116a902379c7238
 export const VAULT_ADDRESS = '0x4BB3f2fD69dceFf340A1cDb61C2B1F503dcAb8A5'
+// https://sepolia.etherscan.io/address/0x4bb3f2fd69dceff340a1cdb61c2b1f503dcab8a5
 
 export const VAULT_ABI = [
   {

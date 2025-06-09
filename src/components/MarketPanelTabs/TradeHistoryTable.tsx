@@ -1,5 +1,4 @@
 import { ColumnDef } from '@tanstack/react-table'
-import { useAccount } from 'wagmi'
 
 import { useGetTradeHistory } from '@/api/hooks'
 import { Trade } from '@/lib/types'
@@ -20,8 +19,7 @@ const columns: ColumnDef<Trade>[] = [
 ]
 
 export function TradeHistoryTable() {
-  const { address } = useAccount()
-  const { data = [], isLoading } = useGetTradeHistory(address ?? '')
+  const { data = [], isLoading } = useGetTradeHistory()
 
   return <DataTable columns={columns} data={data} isLoading={isLoading} />
 }

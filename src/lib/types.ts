@@ -1,20 +1,8 @@
-export type Network = 'Ethereum' | 'Avalanche' | 'Base'
-
 export type FundingBalanceResponse = {
   balance: string
 }
 
-export type DepositRequest = {
-  address: string
-  network: Network
-  txHash: string
-  amount: string
-}
-
-export type WithdrawRequest = DepositRequest
-
 export type CreateOrderRequest = {
-  address: string
   type: 'long' | 'short'
   amount: number
   leverage: number
@@ -28,6 +16,10 @@ export type AuthRequest = {
 }
 export type AuthResponse = {
   token: string
+}
+export type DarkPoolSummaryResponse = {
+  lastExecutionPrice: number
+  dailyVolume: number
 }
 
 export type OrderResponse = {

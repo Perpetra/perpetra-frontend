@@ -1,14 +1,14 @@
-import { useAccount } from 'wagmi'
-
 import { Card } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { useAuthenticated } from '@/hooks/useAuthenticated'
 
 import { OrdersTable } from './OrdersTable'
 import { PositionsTable } from './PositionsTable'
 import { TradeHistoryTable } from './TradeHistoryTable'
 
 export function MarketPanelTabs() {
-  const { isConnected } = useAccount()
+  const isAuthenticated = useAuthenticated()
+
   return (
     <Card className='h-[300px] flex flex-col overflow-hidden p-0'>
       <Tabs defaultValue='orders' className='flex flex-col flex-1'>
@@ -18,7 +18,7 @@ export function MarketPanelTabs() {
           <TabsTrigger value='history'>History</TabsTrigger>
         </TabsList>
 
-        {isConnected ? (
+        {isAuthenticated ? (
           <>
             <TabsContent value='orders' className='overflow-auto'>
               <OrdersTable />

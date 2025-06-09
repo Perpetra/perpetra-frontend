@@ -1,5 +1,4 @@
 import { type ColumnDef } from '@tanstack/react-table'
-import { useAccount } from 'wagmi'
 
 import { useGetOrders } from '@/api/hooks'
 import { DataTable } from '@/components/ui/data-table'
@@ -18,8 +17,7 @@ const columns: ColumnDef<Order>[] = [
 ]
 
 export function OrdersTable() {
-  const { address } = useAccount()
-  const { data = [], isLoading } = useGetOrders(address ?? '')
+  const { data = [], isLoading } = useGetOrders()
 
   return <DataTable columns={columns} data={data} isLoading={isLoading} />
 }

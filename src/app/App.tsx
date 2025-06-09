@@ -1,11 +1,10 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit'
-
 import { Providers } from '@/app/Providers'
+import { HomePage } from '@/components/HomePage'
 
 export function App() {
   return (
     <Providers>
-      <ConnectButton />
+      <HomePage />
     </Providers>
   )
 }

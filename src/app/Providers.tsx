@@ -1,7 +1,7 @@
 import { darkTheme, RainbowKitProvider, getDefaultConfig } from '@rainbow-me/rainbowkit'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import { WagmiProvider, http } from 'wagmi'
-import { mainnet } from 'wagmi/chains'
+import { avalanche, base, mainnet } from 'wagmi/chains'
 
 import { WALLETCONNECT_PROJECT_ID } from '@/lib/constants'
 
@@ -10,8 +10,12 @@ import type { PropsWithChildren } from 'react'
 const config = getDefaultConfig({
   appName: 'Perpetra',
   projectId: WALLETCONNECT_PROJECT_ID,
-  chains: [mainnet],
-  transports: { [mainnet.id]: http() },
+  chains: [mainnet, avalanche, base],
+  transports: {
+    [mainnet.id]: http(),
+    [avalanche.id]: http(),
+    [base.id]: http(),
+  },
 })
 
 const queryClient = new QueryClient()

@@ -10,7 +10,7 @@ const columns: ColumnDef<Trade>[] = [
   { accessorKey: 'type', header: 'Type' },
   { accessorKey: 'entryPrice', header: 'Entry Price' },
   { accessorKey: 'closePrice', header: 'Close Price' },
-  { accessorKey: 'size', header: 'Size (USDT)' },
+  { accessorKey: 'size', header: 'Size (USDC)' },
   { accessorKey: 'result', header: 'Result' },
   {
     accessorKey: 'closedAt',

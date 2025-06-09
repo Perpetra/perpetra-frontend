@@ -79,7 +79,7 @@ export function CreateOrderSidebar() {
           </Tabs>
 
           <div className='flex flex-col gap-2'>
-            <Label>Amount (USDT)</Label>
+            <Label>Amount (USDC)</Label>
             <Input type='number' disabled={disabled} {...register('amount')} />
             {errors.amount && <span className='text-red-500 text-sm'>{errors.amount.message}</span>}
           </div>

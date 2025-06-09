@@ -1,29 +1,27 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useAccount } from 'wagmi'
 
-import { useGetFundingBalance, usePostDeposit, usePostWithdraw } from '@/api/hooks'
+import { useGetFundingBalance } from '@/api/hooks'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
-import type { Network } from '@/lib/types'
+import { useDeposit } from '@/hooks/useDeposit'
+import { useWithdraw } from '@/hooks/useWithdraw'
+import { formatUSDCAmount } from '@/lib/formatUSDCAmount'
 
 type TabValue = 'deposit' | 'withdraw'
 type FormValues = {
   amount: string
-  txHash: string
 }
 
 export function Funding() {
-  const { address, chain } = useAccount()
   const [open, setOpen] = useState(false)
-  const network = (chain?.name as Network) || 'Ethereum'
 
   const balanceQuery = useGetFundingBalance()
 
-  const { mutate: deposit } = usePostDeposit()
-  const { mutate: withdraw } = usePostWithdraw()
+  const { deposit } = useDeposit()
+  const { withdraw } = useWithdraw()
 
   const [tabValue, setTabValue] = useState<TabValue>('deposit')
 
@@ -34,24 +32,27 @@ export function Funding() {
     formState: { isSubmitting },
   } = useForm<FormValues>()
 
-  const onSubmit = ({ amount, txHash }: FormValues) => {
-    if (!address || !chain) return
+  const onSubmit = async ({ amount }: FormValues) => {
+    try {
+      if (tabValue === 'deposit') {
+        await deposit(amount)
+      } else {
+        await withdraw(amount)
+      }
 
-    const payload = { address, network, txHash, amount }
-    if (tabValue === 'deposit') {
-      deposit(payload)
-    } else {
-      withdraw(payload)
+      reset()
+      setOpen(false)
+    } catch (error) {
+      console.error(error)
     }
-
-    reset()
-    setOpen(false)
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant='outline'>{balanceQuery.data?.balance ?? '—'} USDT</Button>
+        <Button variant='outline'>
+          {balanceQuery.data?.balance ? formatUSDCAmount(balanceQuery.data?.balance) : '—'} USDC
+        </Button>
       </DialogTrigger>
 
       <DialogContent className='max-w-sm' showCloseButton={false}>
@@ -66,8 +67,7 @@ export function Funding() {
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <TabsContent value={tabValue} className='space-y-4 mt-2'>
-              <Input placeholder='Amount (USDT)' {...register('amount', { required: true })} />
-              <Input placeholder='Transaction Hash' {...register('txHash', { required: true })} />
+              <Input placeholder='Amount (USDC)' {...register('amount', { required: true })} />
               <Button type='submit' className='w-full' disabled={isSubmitting}>
                 Confirm {tabValue === 'deposit' ? 'Deposit' : 'Withdraw'}
               </Button>

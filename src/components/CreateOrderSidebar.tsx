@@ -48,10 +48,10 @@ export function CreateOrderSidebar() {
         onSuccess: () => {
           reset()
 
-          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.orders.list })
-          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.positions.list })
-          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.funding.balance() })
-          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.trades.history })
+          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.orders })
+          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.positions })
+          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.balance })
+          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.trades })
         },
       },
     )

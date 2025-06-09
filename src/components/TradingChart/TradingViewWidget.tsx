@@ -15,7 +15,7 @@ function TradingViewWidget() {
     script.innerHTML = `
         {
           "autosize": true,
-          "symbol": "BINANCE:BTCUSDT",
+          "symbol": "BINANCE:BTCUSDC",
           "interval": "D",
           "timezone": "Etc/UTC",
           "theme": "dark",

@@ -20,7 +20,7 @@ export function Funding() {
   const [open, setOpen] = useState(false)
   const network = (chain?.name as Network) || 'Ethereum'
 
-  const balanceQuery = useGetFundingBalance(address!, network)
+  const balanceQuery = useGetFundingBalance()
 
   const { mutate: deposit } = usePostDeposit()
   const { mutate: withdraw } = usePostWithdraw()

@@ -21,6 +21,14 @@ export type CreateOrderRequest = {
   limitPrice?: number
   expiresAt?: string
 }
+export type AuthRequest = {
+  address: string
+  signature: string
+  message: string
+}
+export type AuthResponse = {
+  token: string
+}
 
 export type OrderResponse = {
   id: string

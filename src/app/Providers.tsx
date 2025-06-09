@@ -1,28 +1,17 @@
-import { darkTheme, RainbowKitProvider, getDefaultConfig } from '@rainbow-me/rainbowkit'
+import { darkTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
-import { WagmiProvider, http } from 'wagmi'
-import { avalanche, base, mainnet } from 'wagmi/chains'
+import { WagmiProvider } from 'wagmi'
 
-import { WALLETCONNECT_PROJECT_ID } from '@/lib/constants'
+import { WalletAuthGuard } from '@/components/WalletAccountGuard'
+import { wagmiConfig } from '@/lib/wagmiConfig'
 
 import type { PropsWithChildren } from 'react'
-
-const config = getDefaultConfig({
-  appName: 'Perpetra',
-  projectId: WALLETCONNECT_PROJECT_ID,
-  chains: [mainnet, avalanche, base],
-  transports: {
-    [mainnet.id]: http(),
-    [avalanche.id]: http(),
-    [base.id]: http(),
-  },
-})
 
 const queryClient = new QueryClient()
 
 export function Providers({ children }: PropsWithChildren) {
   return (
-    <WagmiProvider config={config}>
+    <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider
           theme={darkTheme({
@@ -33,7 +22,7 @@ export function Providers({ children }: PropsWithChildren) {
             overlayBlur: 'small',
           })}
         >
-          {children}
+          <WalletAuthGuard>{children}</WalletAuthGuard>
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>

@@ -1,5 +1,5 @@
 import { parseUnits } from 'viem'
 
-export function parseUSDCAmount(value: string): bigint {
-  return parseUnits(value, 6)
+export function parseUSDCAmount(value: string | number): bigint {
+  return parseUnits(String(value), 6)
 }

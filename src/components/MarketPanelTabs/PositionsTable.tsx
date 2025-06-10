@@ -33,7 +33,7 @@ export function PositionsTable() {
     },
     {
       id: 'actions',
-      header: '',
+      header: 'Actions',
       cell: ({ row }) => (
         <Button variant='ghost' size='icon' onClick={() => handleClose(row.original.id)}>
           <X className='w-4 h-4' />

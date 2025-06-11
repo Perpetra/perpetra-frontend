@@ -1,30 +1,31 @@
 import { useState } from 'react'
 import { erc20Abi } from 'viem'
-import { useAccount, useWriteContract } from 'wagmi'
+import { useWriteContract } from 'wagmi'
 
-import { USDC_ADDRESS, VAULT_ADDRESS, VAULT_ABI } from '@/lib/constants'
+import { useVaultContracts } from '@/hooks/useVaultContracts'
+import { VAULT_ABI } from '@/lib/constants'
 
 export function useDeposit() {
-  const { address } = useAccount()
   const { writeContractAsync } = useWriteContract()
   const [isPending, setIsPending] = useState(false)
+  const vaultContracts = useVaultContracts()
 
   const deposit = async (amount: bigint) => {
-    if (!address) throw new Error('Wallet not connected')
+    if (!vaultContracts) return
 
     try {
       setIsPending(true)
       // Step 1: Approve Vault to spend USDC
       await writeContractAsync({
-        address: USDC_ADDRESS,
+        address: vaultContracts.usdc,
         abi: erc20Abi,
         functionName: 'approve',
-        args: [VAULT_ADDRESS, amount],
+        args: [vaultContracts.vault, amount],
       })
 
       // Step 2: Call deposit on Vault
       await writeContractAsync({
-        address: VAULT_ADDRESS,
+        address: vaultContracts.vault,
         abi: VAULT_ABI,
         functionName: 'deposit',
         args: [amount],

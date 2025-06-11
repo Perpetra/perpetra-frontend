@@ -1,3 +1,12 @@
+import { Address } from 'viem'
+
+export type SupportedChainId = 11155111 | 84532 | 43113
+
+export type VaultContractMap = {
+  usdc: Address
+  vault: Address
+}
+
 export type FundingBalanceResponse = {
   balance: string
 }

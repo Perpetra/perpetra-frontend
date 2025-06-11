@@ -20,7 +20,7 @@ export const useGetFundingBalance = () =>
   useQuery({
     queryKey: QUERY_KEYS.balance,
     queryFn: async (): Promise<FundingBalanceResponse> => {
-      const res = await axiosInstance.get(API_ROUTES.funding.balance)
+      const res = await axiosInstance.get(API_ROUTES.balance)
       return res.data
     },
   })

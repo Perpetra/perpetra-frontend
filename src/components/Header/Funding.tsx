@@ -81,7 +81,7 @@ export function Funding() {
             </TabsTrigger>
           </TabsList>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <TabsContent value={tabValue} className='space-y-4 mt-2'>
               <div className='flex flex-col gap-2'>
                 <Label>Amount (USDC)</Label>

@@ -6,6 +6,7 @@ interface AuthState {
   authenticatedAddress: string | null
   login: (token: string, address: string) => void
   logout: () => void
+  clearToken: () => void
   hasToken: () => boolean
 }
 
@@ -14,11 +15,9 @@ export const useAuthStore = create<AuthState>()(
     (set, get) => ({
       token: null,
       authenticatedAddress: null,
-
       login: (token, address) => set({ token, authenticatedAddress: address }),
-
       logout: () => set({ token: null, authenticatedAddress: null }),
-
+      clearToken: () => set((prev) => ({ ...prev, token: null })),
       hasToken: () => Boolean(get().token),
     }),
     {

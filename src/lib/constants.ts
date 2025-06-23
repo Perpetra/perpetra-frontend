@@ -4,6 +4,8 @@ export const WALLETCONNECT_PROJECT_ID = import.meta.env.VITE_WALLETCONNECT_PROJE
 
 export const API_URL = 'https://perpetra-api.aftermiracle.com'
 
+export const MAIN_DATE_TIME_FORMAT = 'h:mm a MM/dd/yy'
+
 export const API_ROUTES = {
   auth: '/auth',
   balance: '/funding/balance',

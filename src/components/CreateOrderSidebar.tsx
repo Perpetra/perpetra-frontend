@@ -47,7 +47,7 @@ export function CreateOrderSidebar() {
     defaultValues: { type: 'short' },
   })
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = (data: FormValues) =>
     createOrder(data, {
       onSuccess: () => {
         reset()
@@ -58,7 +58,6 @@ export function CreateOrderSidebar() {
         queryClient.invalidateQueries({ queryKey: QUERY_KEYS.trades })
       },
     })
-  }
 
   const type = watch('type')
 
@@ -67,7 +66,7 @@ export function CreateOrderSidebar() {
   return (
     <aside className='w-[300px] ml-4'>
       <Card className='p-4'>
-        <form className='flex flex-col gap-4' onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form className='flex flex-col gap-4' onSubmit={handleSubmit(onSubmit)} noValidate autoComplete='off'>
           <h3 className='text-lg font-semibold'>New Order</h3>
 
           <Tabs value={type} onValueChange={(val) => setValue('type', val as 'long' | 'short')}>
@@ -82,25 +81,25 @@ export function CreateOrderSidebar() {
           </Tabs>
 
           <div className='flex flex-col gap-2'>
-            <Label>Amount (USDC)</Label>
+            <Label>Amount (USDC)*</Label>
             <Input type='number' disabled={disabled} {...register('amount')} />
             {errors.amount && <span className='text-red-500 text-sm'>{errors.amount.message}</span>}
           </div>
 
           <div className='flex flex-col gap-2'>
-            <Label>Leverage (x)</Label>
+            <Label>Leverage*</Label>
             <Input type='number' disabled={disabled} {...register('leverage')} />
             {errors.leverage && <span className='text-red-500 text-sm'>{errors.leverage.message}</span>}
           </div>
 
           <div className='flex flex-col gap-2'>
-            <Label>Limit Price (optional)</Label>
+            <Label>Limit Price</Label>
             <Input type='number' disabled={disabled} {...register('limitPrice')} />
             {errors.limitPrice && <span className='text-red-500 text-sm'>{errors.limitPrice.message}</span>}
           </div>
 
           <div className='flex flex-col gap-2'>
-            <Label>Expires At (optional)</Label>
+            <Label>Expires At</Label>
             <Input type='datetime-local' disabled={disabled} {...register('expiresAt')} />
             {errors.expiresAt && <span className='text-red-500 text-sm'>{errors.expiresAt.message}</span>}
           </div>

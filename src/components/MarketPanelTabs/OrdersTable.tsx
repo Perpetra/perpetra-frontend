@@ -1,7 +1,9 @@
 import { type ColumnDef } from '@tanstack/react-table'
+import { format, parseISO } from 'date-fns'
 
 import { useGetOrders } from '@/api/hooks'
 import { DataTable } from '@/components/ui/data-table'
+import { MAIN_DATE_TIME_FORMAT } from '@/lib/constants'
 import { Order } from '@/lib/types'
 
 const columns: ColumnDef<Order>[] = [
@@ -9,10 +11,11 @@ const columns: ColumnDef<Order>[] = [
   { accessorKey: 'amount', header: 'Amount' },
   { accessorKey: 'leverage', header: 'Leverage' },
   { accessorKey: 'status', header: 'Status' },
+  { accessorKey: 'limitPrice', header: 'Limit Price' },
   {
-    accessorKey: 'result',
-    header: 'Result',
-    cell: ({ row }) => row.getValue('result') ?? '-',
+    accessorKey: 'expiresAt',
+    header: 'Expires At',
+    cell: ({ getValue }) => format(parseISO(getValue() as string), MAIN_DATE_TIME_FORMAT),
   },
 ]
 

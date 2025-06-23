@@ -41,8 +41,9 @@ export type Order = {
   type: 'long' | 'short'
   amount: number
   leverage: number
-  status: 'active' | 'executed' | 'cancelled'
-  result?: 'win' | 'loss' | null
+  status: 'open' | 'cancelled'
+  limitPrice?: number
+  expiresAt?: string
 }
 
 export type Position = {

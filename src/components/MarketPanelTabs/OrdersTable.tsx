@@ -15,7 +15,7 @@ const columns: ColumnDef<Order>[] = [
   {
     accessorKey: 'expiresAt',
     header: 'Expires At',
-    cell: ({ getValue }) => format(parseISO(getValue() as string), MAIN_DATE_TIME_FORMAT),
+    cell: ({ getValue }) => (getValue() ? format(parseISO(getValue() as string), MAIN_DATE_TIME_FORMAT) : undefined),
   },
 ]
 

@@ -29,15 +29,15 @@ export const DEPOSIT_CONTRACTS: Record<SupportedChainId, DepositContractMap> = {
   11155111: {
     // https://sepolia.etherscan.io/address/0x1c7d4b196cb0c7b01d743fbc6116a902379c7238
     usdc: '0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238',
-    // https://sepolia.etherscan.io/address/0x2A2ab34B73E7222a02984D1C0e3Cf19aabB3C080
-    depositContract: '0x2A2ab34B73E7222a02984D1C0e3Cf19aabB3C080',
+    // https://sepolia.etherscan.io/address/0xEb0a08b456Be2cf2111d1353f26174e25d351e4C
+    depositContract: '0xEb0a08b456Be2cf2111d1353f26174e25d351e4C',
   },
   // baseSepolia
   84532: {
     // https://sepolia.basescan.org/address/0x036CbD53842c5426634e7929541eC2318f3dCF7e
     usdc: '0x036CbD53842c5426634e7929541eC2318f3dCF7e',
-    // https://sepolia.basescan.org/address/0xA95618676B5c049F024529330C429dE868d7db41
-    depositContract: '0xA95618676B5c049F024529330C429dE868d7db41',
+    // https://sepolia.basescan.org/address/0x536B6ca1344DBBa5Bfce3341a38fd77A10D6cf0B
+    depositContract: '0x536B6ca1344DBBa5Bfce3341a38fd77A10D6cf0B',
   },
 }
 

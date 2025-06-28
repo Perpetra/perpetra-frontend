@@ -1,19 +1,19 @@
 import { useWriteContract } from 'wagmi'
 
-import { useVaultContracts } from '@/hooks/useVaultContracts'
-import { VAULT_ABI } from '@/lib/constants'
+import { useDepositContracts } from '@/hooks/useDepositContracts'
+import { DEPOSIT_ABI } from '@/lib/constants'
 
 export function useWithdraw() {
   const { writeContractAsync, isPending, error } = useWriteContract()
-  const vaultContracts = useVaultContracts()
+  const depositContracts = useDepositContracts()
 
   const withdraw = async (amount: bigint) => {
-    if (!vaultContracts) return
+    if (!depositContracts) return
 
     return writeContractAsync({
-      address: vaultContracts.vault,
-      abi: VAULT_ABI,
-      functionName: 'withdraw',
+      address: depositContracts?.depositContract,
+      abi: DEPOSIT_ABI,
+      functionName: 'requestWithdraw',
       args: [amount],
     })
   }

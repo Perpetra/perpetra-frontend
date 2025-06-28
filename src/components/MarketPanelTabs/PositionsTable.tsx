@@ -26,11 +26,7 @@ export function PositionsTable() {
     { accessorKey: 'type', header: 'Type' },
     { accessorKey: 'entryPrice', header: 'Entry Price' },
     { accessorKey: 'currentPrice', header: 'Current Price' },
-    {
-      accessorKey: 'pnl',
-      header: 'PnL (%)',
-      cell: ({ row }) => `${row.getValue('pnl')}%`,
-    },
+    { accessorKey: 'pnl', header: 'PnL' },
     {
       id: 'actions',
       header: 'Actions',

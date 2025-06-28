@@ -40,6 +40,7 @@ export const useGetOrders = () =>
       const res = await axiosInstance.get(API_ROUTES.orders)
       return res.data?.data
     },
+    refetchInterval: 1000,
   })
 
 export const useGetPositions = () =>
@@ -49,6 +50,7 @@ export const useGetPositions = () =>
       const res = await axiosInstance.get(API_ROUTES.positions)
       return res.data?.data
     },
+    refetchInterval: 1000,
   })
 
 export const useClosePosition = () =>
@@ -63,6 +65,7 @@ export const useGetTradeHistory = () =>
       const res = await axiosInstance.get(API_ROUTES.trades)
       return res.data?.data
     },
+    refetchInterval: 1000,
   })
 
 export const useAuth = () => {
